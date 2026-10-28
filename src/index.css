@@ -1,1 +1,27 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+}
+
+@theme {
+  /* Backgrounds */
+  --color-background: #080f1d;
+  --color-surface: #0d1b2d;
+  --color-card: #17283d;
+
+  /* Brand */
+  --color-primary: #2563eb;
+  --color-accent: #8fa8ff;
+
+  /* Typography */
+  --color-text-primary: #f8fafc;
+  --color-text-muted: #a5b4c8;
+
+  /* Status */
+  --color-completed: #34d399;
+  --color-playing: #3b82f6;
+  --color-backlog: #f87171;
+  --color-abandoned: #fbbf24;
+  --color-rating: #facc15;
+}
