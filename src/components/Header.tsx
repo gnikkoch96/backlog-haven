@@ -1,17 +1,30 @@
-import { Gamepad2 } from "lucide-react";
+import { Gamepad2, Search } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="flex justify-between items-center">
-      {/* icon + title */}
-      <div className="flex items-center gap-2">
-        <Gamepad2 />
-        <p>Backlog Haven</p>
-      </div>
+    <header className="relative isolate">
+      {/* dark overlay */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 inset-x-0 h-20 bg-linear-to-b from-background/90 to-transparent -z-10"
+      />
 
-      {/* profile */}
-      <div className="flex justify-center items-center border rounded-full size-9">
-        <span className="font-bold">N</span>
+      <div className="flex justify-between items-center p-3">
+        {/* icon + title */}
+        <div className="flex items-center gap-2">
+          <Gamepad2 className="text-accent" />
+          <p className="text-text-primary font-semibold">Backlog Haven</p>
+        </div>
+
+        {/* search icon + profile */}
+        <div className="flex gap-2">
+          <button>
+            <Search className="text-text-primary" />
+          </button>
+          <div className="flex justify-center items-center rounded-full size-9 bg-blue-300">
+            <span className="font-semibold">N</span>
+          </div>
+        </div>
       </div>
     </header>
   );
