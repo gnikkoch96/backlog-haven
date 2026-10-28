@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Inter Variable", sans-serif;
 }
 
 @theme {
@@ -19,7 +19,7 @@
   --color-text-muted: #a5b4c8;
 
   /* Status */
-  --color-completed: #34d399;
+  --color-completed: #34d399;   
   --color-playing: #3b82f6;
   --color-backlog: #f87171;
   --color-abandoned: #fbbf24;
