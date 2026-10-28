@@ -1,10 +1,15 @@
 import Header from "./components/Header";
 import "@fontsource-variable/inter";
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="">
+    <div className="bg-background min-h-dvh">
       <Header />
+
+      <div className="px-3">
+        <Home />
+      </div>
     </div>
   );
 }
