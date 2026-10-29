@@ -1,6 +1,6 @@
 import Header from "./components/Header";
 import "@fontsource-variable/inter";
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
