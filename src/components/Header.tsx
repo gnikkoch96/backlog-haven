@@ -2,7 +2,7 @@ import { Gamepad2, Search } from "lucide-react";
 
 export default function Header() {
   return (
-    <header className="relative isolate">
+    <header className="relative isolate px-2">
       {/* dark overlay */}
       <div
         aria-hidden="true"
