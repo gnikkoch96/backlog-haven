@@ -32,7 +32,7 @@ export default function GameStats() {
   return (
     <section
       aria-labelledby="gaming-stats-heading"
-      className="flex flex-col gap-3 border border-text-muted/30 rounded-xl bg-surface p-3"
+      className="home-section"
     >
       {/* header + toggle */}
       <div className="flex justify-between items-center text-text-primary">
