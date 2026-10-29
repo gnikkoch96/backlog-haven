@@ -36,14 +36,14 @@ export default function GameStats() {
     >
       {/* header + toggle */}
       <div className="flex justify-between items-center text-text-primary">
-        <h2 id="gaming-stats-heading" className="text-lg font-semibold">
+        <h2 id="gaming-stats-heading" className="text-md font-semibold">
           Your Gaming Stats
         </h2>
         <div className="relative isolate grid grid-cols-2 border bg-card border-text-muted/30 rounded-lg">
           {/* blue background translation */}
           <div
             aria-hidden={true}
-            className={`absolute bg-accent w-1/2 h-full -z-10 ${toggleButtonBase} ${period === "all" ? "translate-x-0" : "translate-x-full"} transition-transform duration-200 ease-in-out motion-reduce:transition-none`}
+            className={`absolute bg-accent w-1/2 h-full -z-10 rounded-lg ${period === "all" ? "translate-x-0" : "translate-x-full"} transition-transform duration-200 ease-in-out motion-reduce:transition-none`}
           />
 
           <button
@@ -70,7 +70,7 @@ export default function GameStats() {
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className="border border-text-muted/30 rounded-lg text-center py-1"
+            className="border border-text-muted/30 rounded-lg text-center py-1 bg-card"
           >
             <p
               className={`flex justify-center gap-1 ${getValueTextColorByLabel(stat.label)} text-lg font-bold`}
