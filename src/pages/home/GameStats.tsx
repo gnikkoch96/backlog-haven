@@ -27,7 +27,7 @@ function getValueTextColorByLabel(label: string): string {
 const toggleButtonBase = "px-3 py-1.5 text-sm rounded-lg font-medium";
 
 export default function GameStats() {
-  const [period, setPeriod] = useState<"all" | "year">("all");
+  const [period, setPeriod] = useState<"all" | "year">("year");
 
   return (
     <section
@@ -43,17 +43,8 @@ export default function GameStats() {
           {/* blue background translation */}
           <div
             aria-hidden={true}
-            className={`absolute bg-accent w-1/2 h-full -z-10 rounded-lg ${period === "all" ? "translate-x-0" : "translate-x-full"} transition-transform duration-200 ease-in-out motion-reduce:transition-none`}
+            className={`absolute bg-accent w-1/2 h-full -z-10 rounded-lg ${period === "year" ? "translate-x-0" : "translate-x-full"} transition-transform duration-200 ease-in-out motion-reduce:transition-none`}
           />
-
-          <button
-            aria-pressed={period === "all"}
-            type="button"
-            onClick={() => setPeriod("all")}
-            className={`${toggleButtonBase} ${period === "all" ? " text-text-primary" : " text-text-muted"}`}
-          >
-            All Time
-          </button>
           <button
             aria-pressed={period === "year"}
             type="button"
@@ -61,6 +52,14 @@ export default function GameStats() {
             className={`${toggleButtonBase} ${period === "year" ? "text-text-primary" : "text-text-muted"}`}
           >
             {new Date().getFullYear()}
+          </button>
+          <button
+            aria-pressed={period === "all"}
+            type="button"
+            onClick={() => setPeriod("all")}
+            className={`${toggleButtonBase} ${period === "all" ? " text-text-primary" : " text-text-muted"}`}
+          >
+            All Time
           </button>
         </div>
       </div>
