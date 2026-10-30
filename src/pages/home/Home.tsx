@@ -1,3 +1,4 @@
+import CurrentPlays from "./CurrentPlays";
 import GameStats from "./GameStats";
 
 export default function Home() {
@@ -21,6 +22,8 @@ export default function Home() {
       <GameStats/>
       
       {/* currently playing */}
+      <CurrentPlays/>
+      
       {/* recent completion */}
     </main>
   );
