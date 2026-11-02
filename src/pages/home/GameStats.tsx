@@ -3,21 +3,14 @@ import { useState } from "react";
 
 // TODO: Filter statistics by selected period when backend data is available.
 const stats = [
-  { label: "Total Games", value: 120 },
   { label: "Completed", value: 45 },
-  { label: "Playing", value: 3 },
-  { label: "Backlog", value: 60 },
   { label: "Abandoned", value: 12 },
-  { label: "Avg Rating", value: 8.2 }, // not sure if I want to keep this
+  { label: "Completed %", value: 85 },
 ];
 
 function getValueTextColorByLabel(label: string): string {
   if (label === "Completed") {
     return "text-completed";
-  } else if (label === "Playing") {
-    return "text-playing";
-  } else if (label === "Backlog") {
-    return "text-backlog";
   } else if (label === "Abandoned") {
     return "text-abandoned";
   }
@@ -30,10 +23,7 @@ export default function GameStats() {
   const [period, setPeriod] = useState<"all" | "year">("year");
 
   return (
-    <section
-      aria-labelledby="gaming-stats-heading"
-      className="home-section"
-    >
+    <section aria-labelledby="gaming-stats-heading" className="home-section">
       {/* header + toggle */}
       <div className="flex justify-between items-center text-text-primary">
         <h2 id="gaming-stats-heading" className="text-md font-semibold">
