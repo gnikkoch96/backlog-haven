@@ -6,6 +6,7 @@ const currentPlays = [
     id: 1,
     title: "God of War",
     platform: "PS5",
+    system: "Rog Ally",
     genre: "Action RPG",
     status: "playing",
     coverUrl:
@@ -15,6 +16,7 @@ const currentPlays = [
     id: 2,
     title: "Naruto Uzumaki Chronicles",
     platform: "PS2",
+    system: "Rog Ally",
     genre: "Action RPG",
     status: "playing",
     coverUrl:
@@ -24,6 +26,7 @@ const currentPlays = [
     id: 3,
     title: "40 Winks",
     platform: "NS",
+    system: "Rog Ally",
     genre: "Platformer",
     status: "playing",
     coverUrl:
@@ -33,6 +36,7 @@ const currentPlays = [
     id: 4,
     title: "Frog Feast",
     platform: "PC",
+    system: "Rog Ally",
     genre: "Platformer",
     status: "playing",
     coverUrl:
@@ -153,17 +157,17 @@ export default function CurrentPlays() {
                 {/* metadata */}
                 <div className="flex flex-col gap-1 justify-center items-center">
                   {/* title */}
-                  <p className="text-text-primary font-bold text-center">
+                  <p className="text-text-primary font-bold text-center line-clamp-2 [text-shadow:0_2px_4px_rgba(0,0,0,0.8)]">
                     {game.title}
                   </p>
 
                   {/* tags */}
                   <div className="flex gap-2">
-                    <span className="bg-surface rounded px-2 text-text-primary">
+                    <span className="bg-surface rounded px-2 text-text-primary line-clamp-1">
                       {game.platform}
                     </span>
-                    <span className="bg-surface rounded px-2 text-text-primary">
-                      {game.genre}
+                    <span className="bg-surface rounded px-2 text-text-primary line-clamp-1">
+                      {game.system}
                     </span>
                   </div>
                 </div>
