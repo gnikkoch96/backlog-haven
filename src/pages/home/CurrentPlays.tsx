@@ -44,10 +44,80 @@ const currentPlays = [
   },
 ];
 
-export default function CurrentPlays() {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const carouselRef = useRef<HTMLUListElement>(null);
+const AUTO_SCROLL_DELAY = 7000;
+const PAUSE_SCROLL_TIMER = 10000;
 
+export default function CurrentPlays() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoScrollPaused, setIsAutoScrollPaused] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () => window.matchMedia("(prefers-reduced-motion:reduce)").matches,
+  );
+  const [isPageVisible, setIsPageVisible] = useState(!document.hidden);
+
+  const carouselRef = useRef<HTMLUListElement>(null);
+  const pauseTimerRef = useRef<number | null>(null);
+
+  const isFirstGame = activeIndex === 0;
+  const isLastGame = activeIndex === currentPlays.length - 1;
+
+  const scrollToSlide = (index: number) => {
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const slide = carousel.querySelector<HTMLElement>(
+      `[data-index="${index}"]`,
+    );
+
+    slide?.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  };
+
+  const pauseAutoScroll = () => {
+    setIsAutoScrollPaused(true);
+
+    if (pauseTimerRef.current !== null) {
+      window.clearTimeout(pauseTimerRef.current);
+    }
+
+    pauseTimerRef.current = window.setTimeout(() => {
+      setIsAutoScrollPaused(false);
+      pauseTimerRef.current = null;
+    }, PAUSE_SCROLL_TIMER);
+  };
+
+  // visibility listener
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      setIsPageVisible(!document.hidden);
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  // reduced-motion listener
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  // intersection observer setup (for auto-scroll)
   useEffect(() => {
     const carousel = carouselRef.current;
     if (!carousel) return;
@@ -75,23 +145,30 @@ export default function CurrentPlays() {
     return () => observer.disconnect();
   }, []);
 
-  const isFirstGame = activeIndex === 0;
-  const isLastGame = activeIndex === currentPlays.length - 1;
+  // auto-scroll
+  useEffect(() => {
+    // if any of these are true we don't auto scroll
+    if (isAutoScrollPaused || prefersReducedMotion || !isPageVisible) return;
 
-  const scrollToSlide = (index: number) => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
+    const timer = window.setTimeout(() => {
+      const nextIndex =
+        activeIndex === currentPlays.length - 1 ? 0 : activeIndex + 1;
+      scrollToSlide(nextIndex);
+    }, AUTO_SCROLL_DELAY);
 
-    const slide = carousel.querySelector<HTMLElement>(
-      `[data-index="${index}"]`,
-    );
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [activeIndex, isAutoScrollPaused, prefersReducedMotion, isPageVisible]);
 
-    slide?.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  };
+  // handles pause timer cleanup during unmount (for auto-scroll)
+  useEffect(() => {
+    return () => {
+      if (pauseTimerRef.current !== null) {
+        window.clearTimeout(pauseTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <section className="home-section">
@@ -105,20 +182,26 @@ export default function CurrentPlays() {
       </div>
 
       {/* image carousel */}
-      <div className="relative isolate overflow-hidden rounded-xl  -mx-3 -mb-3">
+      <div
+        className="relative isolate overflow-hidden rounded-xl  -mx-3 -mb-3"
+        onFocus={pauseAutoScroll}
+      >
         {/* blurred background */}
         <img
           src={currentPlays[activeIndex].coverUrl}
-          alt={`${currentPlays[activeIndex].title} cover art background image`}
+          alt={``}
           className="absolute pointer-events-none blur-sm w-full h-full object-cover -z-10 opacity-70"
           aria-hidden="true"
         />
 
         {!isFirstGame && (
           <button
+            type="button"
+            aria-label="previous game button"
             className={`absolute flex justify-center items-center top-[40%] left-[20%] text-text-primary bg-surface rounded-full z-10 border border-accent/30`}
             onClick={() => {
               scrollToSlide(activeIndex - 1);
+              pauseAutoScroll();
             }}
           >
             <ChevronLeft />
@@ -127,8 +210,13 @@ export default function CurrentPlays() {
 
         {!isLastGame && (
           <button
+            type="button"
+            aria-label="next game button"
             className={`absolute flex justify-center items-center top-[40%] right-[20%] text-text-primary bg-surface rounded-full z-10 border border-accent/30`}
-            onClick={() => scrollToSlide(activeIndex + 1)}
+            onClick={() => {
+              scrollToSlide(activeIndex + 1);
+              pauseAutoScroll();
+            }}
           >
             <ChevronRight />
           </button>
@@ -137,10 +225,13 @@ export default function CurrentPlays() {
         <ul
           ref={carouselRef}
           className="flex gap-3 overflow-x-auto snap-x snap-mandatory px-[15%] "
+          onPointerDown={pauseAutoScroll}
+          onWheel={pauseAutoScroll}
         >
           {/* Leading spacer: gives the first slide enough room to center */}
           <li aria-hidden="true" className="shrink-0 w-[15%]" />
 
+          {/* content */}
           {currentPlays.map((game, index) => (
             <li
               key={game.id}
