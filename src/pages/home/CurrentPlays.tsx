@@ -200,7 +200,7 @@ export default function CurrentPlays() {
         {!isFirstGame && (
           <button
             type="button"
-            aria-label="previous game button"
+            aria-label="previous game"
             className={`absolute flex justify-center items-center top-[40%] left-[20%] text-text-primary bg-surface rounded-full z-10 border border-accent/30`}
             onClick={() => {
               scrollToSlide(activeIndex - 1);
@@ -214,7 +214,7 @@ export default function CurrentPlays() {
         {!isLastGame && (
           <button
             type="button"
-            aria-label="next game button"
+            aria-label="next game"
             className={`absolute flex justify-center items-center top-[40%] right-[20%] text-text-primary bg-surface rounded-full z-10 border border-accent/30`}
             onClick={() => {
               scrollToSlide(activeIndex + 1);
