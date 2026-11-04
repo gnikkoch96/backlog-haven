@@ -46,6 +46,7 @@ const currentPlays = [
 
 const AUTO_SCROLL_DELAY = 7000;
 const PAUSE_SCROLL_TIMER = 10000;
+const MAX_CURRENT_PLAYS = 10;
 
 export default function CurrentPlays() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -58,8 +59,10 @@ export default function CurrentPlays() {
   const carouselRef = useRef<HTMLUListElement>(null);
   const pauseTimerRef = useRef<number | null>(null);
 
+  const displayedCurrentPlays = currentPlays.slice(0, MAX_CURRENT_PLAYS);
+
   const isFirstGame = activeIndex === 0;
-  const isLastGame = activeIndex === currentPlays.length - 1;
+  const isLastGame = activeIndex === displayedCurrentPlays.length - 1;
 
   const scrollToSlide = (index: number) => {
     const carousel = carouselRef.current;
@@ -152,7 +155,7 @@ export default function CurrentPlays() {
 
     const timer = window.setTimeout(() => {
       const nextIndex =
-        activeIndex === currentPlays.length - 1 ? 0 : activeIndex + 1;
+        activeIndex === displayedCurrentPlays.length - 1 ? 0 : activeIndex + 1;
       scrollToSlide(nextIndex);
     }, AUTO_SCROLL_DELAY);
 
@@ -188,7 +191,7 @@ export default function CurrentPlays() {
       >
         {/* blurred background */}
         <img
-          src={currentPlays[activeIndex].coverUrl}
+          src={displayedCurrentPlays[activeIndex].coverUrl}
           alt={``}
           className="absolute pointer-events-none blur-sm w-full h-full object-cover -z-10 opacity-70"
           aria-hidden="true"
@@ -232,7 +235,7 @@ export default function CurrentPlays() {
           <li aria-hidden="true" className="shrink-0 w-[15%]" />
 
           {/* content */}
-          {currentPlays.map((game, index) => (
+          {displayedCurrentPlays.map((game, index) => (
             <li
               key={game.id}
               data-index={index}
@@ -243,6 +246,7 @@ export default function CurrentPlays() {
                   src={game.coverUrl}
                   alt={`${game.title} cover art`}
                   className="w-40 shadow-xl"
+                  loading="lazy"
                 />
 
                 {/* metadata */}
