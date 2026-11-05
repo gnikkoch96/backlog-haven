@@ -194,10 +194,15 @@ export default function CurrentPlays() {
   }, []);
 
   return (
-    <section className="home-section">
+    <section aria-labelledby="current-plays-heading" className="home-section">
       {/* current playing text + view all */}
       <div className="flex justify-between">
-        <h2 className="text-text-primary">Currently Playing</h2>
+        <h2
+          id="current-plays-heading"
+          className="text-text-primary font-semibold"
+        >
+          Currently Playing
+        </h2>
         {/* todo replace with Link from react-router library */}
         <a href="#" className="text-accent">
           View All &gt;
