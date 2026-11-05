@@ -9,6 +9,7 @@ const currentPlays = [
     system: "Rog Ally",
     genre: "Action RPG",
     status: "playing",
+    start_date: "2026-10-12",
     coverUrl:
       "https://images.igdb.com/igdb/image/upload/t_cover_big/co1tmu.jpg",
   },
@@ -19,6 +20,7 @@ const currentPlays = [
     system: "Rog Ally",
     genre: "Action RPG",
     status: "playing",
+    start_date: "2026-10-21",
     coverUrl:
       "https://images.igdb.com/igdb/image/upload/t_cover_big/co49yj.jpg",
   },
@@ -29,6 +31,7 @@ const currentPlays = [
     system: "Rog Ally",
     genre: "Platformer",
     status: "playing",
+    start_date: "2026-10-30",
     coverUrl:
       "https://images.igdb.com/igdb/image/upload/t_cover_big/co1t9w.jpg",
   },
@@ -39,14 +42,31 @@ const currentPlays = [
     system: "Rog Ally",
     genre: "Platformer",
     status: "playing",
+    start_date: "2026-11-04",
     coverUrl:
       "https://images.igdb.com/igdb/image/upload/t_cover_big/co9spw.jpg",
   },
 ];
 
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
 const AUTO_SCROLL_DELAY = 7000;
 const PAUSE_SCROLL_TIMER = 10000;
 const MAX_CURRENT_PLAYS = 10;
+
+// accepts strings that are ISO format
+const getElapsedDays = (startDate: string): string => {
+  const elapsedDays = Math.floor(
+    (Date.now() - new Date(startDate).getTime()) / MS_PER_DAY,
+  );
+
+  return elapsedDays === 0
+    ? "today"
+    : elapsedDays === 1
+      ? "yesterday"
+      : elapsedDays < 0
+        ? "in the future? Nani!?"
+        : `${elapsedDays} days ago`;
+};
 
 export default function CurrentPlays() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -265,6 +285,11 @@ export default function CurrentPlays() {
                       {game.system}
                     </span>
                   </div>
+
+                  {/* date */}
+                  <p className="text-text-primary/90">
+                    Started {getElapsedDays(game.start_date)}
+                  </p>
                 </div>
               </div>
             </li>
