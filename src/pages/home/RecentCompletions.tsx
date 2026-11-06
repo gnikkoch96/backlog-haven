@@ -97,6 +97,7 @@ export default function RecentCompletions() {
               src={game.coverUrl}
               alt={`${game.title} cover art`}
               className="object-cover h-40"
+              loading="lazy"
             />
 
             {/* title */}
