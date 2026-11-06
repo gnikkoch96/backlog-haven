@@ -61,7 +61,7 @@ const recentCompletions = [
   },
 ];
 
-const MAX_RECENT_COMPLETIONS = 4;
+const MAX_RECENT_COMPLETIONS = 5;
 
 export default function RecentCompletions() {
   const displayedRecentCompletions = recentCompletions.slice(
@@ -89,18 +89,18 @@ export default function RecentCompletions() {
       </div>
 
       {/* recent completed games */}
-      <div className="flex gap-2">
+      <ul className="flex overflow-x-auto">
         {displayedRecentCompletions.map((game) => (
-          <div className="flex flex-col  gap-1">
+          <li className="flex flex-col gap-1 items-start w-[40%] shrink-0">
             {/* game art */}
             <img
               src={game.coverUrl}
               alt={`${game.title} cover art`}
-              className="w-full shadow-xl"
+              className="object-cover h-40"
             />
 
             {/* title */}
-            <p className="text-text-primary text-xs font-bold line-clamp-2 ">
+            <p className="text-text-primary text-xs font-bold line-clamp-2 min-w-0">
               {game.title}
             </p>
 
@@ -117,9 +117,9 @@ export default function RecentCompletions() {
                 year: "numeric",
               }).format(new Date(game.finish_date))}
             </p>
-          </div>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }
