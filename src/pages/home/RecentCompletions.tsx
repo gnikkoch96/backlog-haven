@@ -13,7 +13,7 @@ const recentCompletions = [
   },
   {
     id: 2,
-    title: "Metroid Dread",
+    title: "GTA V",
     platform: "NS",
     system: "ROG Ally",
     genre: "Metroidvania",
@@ -25,7 +25,7 @@ const recentCompletions = [
   },
   {
     id: 3,
-    title: "Final Fantasy VII Remake",
+    title: "Horizon Zero Dawn",
     platform: "PS5",
     system: "PlayStation 5",
     genre: "JRPG",
@@ -37,7 +37,7 @@ const recentCompletions = [
   },
   {
     id: 4,
-    title: "Ori and the Will of the Wisps",
+    title: "Tyranny",
     platform: "PC",
     system: "ROG Ally",
     genre: "Platformer",
@@ -49,7 +49,7 @@ const recentCompletions = [
   },
   {
     id: 5,
-    title: "Resident Evil 4",
+    title: "God of War Ragnarok",
     platform: "PS5",
     system: "PlayStation 5",
     genre: "Survival Horror",
@@ -91,12 +91,12 @@ export default function RecentCompletions() {
       {/* recent completed games */}
       <ul className="flex overflow-x-auto">
         {displayedRecentCompletions.map((game) => (
-          <li className="flex flex-col gap-1 items-start w-[40%] shrink-0">
+          <li className="flex flex-col gap-1 items-start w-[30%] shrink-0">
             {/* game art */}
             <img
               src={game.coverUrl}
               alt={`${game.title} cover art`}
-              className="object-cover h-40"
+              className="object-cover h-30"
               loading="lazy"
             />
 
