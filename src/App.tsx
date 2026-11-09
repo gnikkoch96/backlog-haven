@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import "@fontsource-variable/inter";
 import Home from "./pages/home/Home";
+import { MobileNavigation } from "./components/Navigation";
 
 function App() {
   return (
@@ -10,6 +11,8 @@ function App() {
       <div className="px-3">
         <Home />
       </div>
+
+      <MobileNavigation/>
     </div>
   );
 }

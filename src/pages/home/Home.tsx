@@ -12,7 +12,7 @@ export default function Home() {
         : "Good evening!, User";
 
   return (
-    <main className="flex flex-col gap-3">
+    <main className="flex flex-col gap-3 pb-18">
       {/* gretting message */}
       <div className="text-text-primary px-2">
         <h1 className="text-2xl font-bold">{greetingMsg} </h1>
