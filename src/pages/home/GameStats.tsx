@@ -1,26 +1,41 @@
-import { Star } from "lucide-react";
-import { useState } from "react";
-
-// TODO: Filter statistics by selected period when backend data is available.
-const stats = [
-  { label: "Completed", value: 45 },
-  { label: "Abandoned", value: 12 },
-  { label: "Completed %", value: 85 },
-];
-
-function getValueTextColorByLabel(label: string): string {
-  if (label === "Completed") {
-    return "text-completed";
-  } else if (label === "Abandoned") {
-    return "text-abandoned";
-  }
-  return "text-white";
-}
+import { useEffect, useState } from "react";
+import Stats from "../../components/Stats";
+import type { StatItem } from "../../types/stats";
+import { gameData } from "../../mocks/gameData";
 
 const toggleButtonBase = "px-3 py-1.5 text-sm rounded-lg font-medium";
 
 export default function GameStats() {
   const [period, setPeriod] = useState<"all" | "year">("year");
+  const [stats, setStats] = useState<StatItem[] | null>(null);
+
+  useEffect(() => {
+    // completed
+    const completedGames = gameData.filter(
+      (game) => game.status === "Completed",
+    ).length;
+
+    // abandoned
+    const abandonedGames = gameData.filter(
+      (game) => game.status === "Completed",
+    ).length;
+
+    // completion rate (completed/total)
+    const totalGames = gameData.filter(
+      (game) =>
+        game.status === "Completed" ||
+        game.status === "Abandoned" ||
+        game.status === "Currently Playing",
+    ).length;
+
+    const completionRate = (completedGames / totalGames) * 100;
+
+    setStats([
+      { label: "Completed", value: completedGames },
+      { label: "Abandoned", value: abandonedGames },
+      { label: "Completion Rate", value: Number(completionRate.toFixed(2)) },
+    ]);
+  }, []);
 
   return (
     <section aria-labelledby="gaming-stats-heading" className="home-section">
@@ -54,25 +69,7 @@ export default function GameStats() {
         </div>
       </div>
 
-      {/* stats */}
-      <div className="grid grid-cols-3 gap-2">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="border border-text-muted/30 rounded-lg text-center py-1 bg-card"
-          >
-            <p
-              className={`flex justify-center gap-1 ${getValueTextColorByLabel(stat.label)} text-lg font-bold`}
-            >
-              {stat.label === "Avg Rating" && (
-                <Star className="fill-rating stroke-0" />
-              )}{" "}
-              {stat.value}
-            </p>
-            <p className="text-text-muted text-xs">{stat.label}</p>
-          </div>
-        ))}
-      </div>
+      <Stats stats={stats} />
     </section>
   );
 }
