@@ -91,7 +91,7 @@ export default function RecentCompletions() {
       {/* recent completed games */}
       <ul className="flex overflow-x-auto">
         {displayedRecentCompletions.map((game) => (
-          <li className="flex flex-col gap-1 items-start w-[30%] shrink-0">
+          <li key={game.id} className="flex flex-col gap-1 items-start w-[30%] shrink-0">
             {/* game art */}
             <img
               src={game.coverUrl}
