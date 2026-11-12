@@ -8,8 +8,8 @@ const toggleButtonBase = "px-3 py-1.5 text-sm rounded-lg font-medium";
 
 export default function GameStats() {
   const [period, setPeriod] = useState<"all" | "year">("year");
-  const [games, setGames] = useState(gameData);
-
+  const games = gameData;
+  
   // completed
   const completedGames = games.filter(
     (game) => game.status === GAME_STATUS.COMPLETED,
