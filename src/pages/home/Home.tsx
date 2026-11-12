@@ -1,6 +1,6 @@
 import CurrentPlays from "./CurrentPlays";
 import GameStats from "./GameStats";
-import RecentCompletions from "./RecentCompletions";
+import RecentCompletions from "./RecentHistory";
 
 export default function Home() {
   const currentHour = new Date().getHours();
