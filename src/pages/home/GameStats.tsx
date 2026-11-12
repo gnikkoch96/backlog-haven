@@ -31,16 +31,16 @@ export default function GameStats() {
   const completionRate = (completedGames / totalGames) * 100;
 
   const stats: StatItem[] = [
-    { label: GAME_STATUS.COMPLETED, value: completedGames },
-    { label: GAME_STATUS.ABANDONED, value: abandonedGames },
+    { label: 'Completed', value: completedGames },
+    { label: 'Abandoned', value: abandonedGames },
     {
-      label: GAME_STATUS.COMPLETION_RATE,
+      label: 'Completion Rate',
       value: Number(completionRate.toFixed(2)),
     },
   ];
 
   return (
-    <section aria-labelledby="gaming-stats-heading" className="home-section">
+    <section aria-labelledby="gaming-stats-heading" className="section-card">
       {/* header + toggle */}
       <div className="flex justify-between items-center text-text-primary">
         <h2 id="gaming-stats-heading" className="text-md font-semibold">

@@ -25,7 +25,7 @@ export default function RecentCompletions() {
   return (
     <section
       aria-labelledby="recent-completions-heading"
-      className="home-section"
+      className="section-card"
     >
       {/* label + view all */}
       <div className="flex justify-between">

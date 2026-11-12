@@ -26,6 +26,6 @@
   --color-rating: #facc15;
 }
 
-@utility home-section {
+@utility section-card {
   @apply flex flex-col gap-3 border border-text-muted/30 rounded-xl bg-surface p-3
 }

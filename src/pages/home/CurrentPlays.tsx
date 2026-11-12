@@ -163,7 +163,7 @@ export default function CurrentPlays() {
   }, []);
 
   return (
-    <section aria-labelledby="current-plays-heading" className="home-section">
+    <section aria-labelledby="current-plays-heading" className="section-card">
       {/* current playing text + view all */}
       <div className="flex justify-between">
         <h2
