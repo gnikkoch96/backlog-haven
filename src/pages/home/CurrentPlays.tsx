@@ -1,52 +1,7 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-
-const currentPlays = [
-  {
-    id: 1,
-    title: "God of War",
-    platform: "PS5",
-    system: "Rog Ally",
-    genre: "Action RPG",
-    status: "playing",
-    start_date: "2026-10-12",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co1tmu.jpg",
-  },
-  {
-    id: 2,
-    title: "Naruto Uzumaki Chronicles",
-    platform: "PS2",
-    system: "Rog Ally",
-    genre: "Action RPG",
-    status: "playing",
-    start_date: "2026-10-21",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co49yj.jpg",
-  },
-  {
-    id: 3,
-    title: "40 Winks",
-    platform: "NS",
-    system: "Rog Ally",
-    genre: "Platformer",
-    status: "playing",
-    start_date: "2026-10-30",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co1t9w.jpg",
-  },
-  {
-    id: 4,
-    title: "Frog Feast",
-    platform: "PC",
-    system: "Rog Ally",
-    genre: "Platformer",
-    status: "playing",
-    start_date: "2026-11-04",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co9spw.jpg",
-  },
-];
+import { gameData } from "../../mocks/gameData";
+import { GAME_STATUS } from "../../constants/gameStatus";
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24;
 const AUTO_SCROLL_DELAY = 7000;
@@ -75,11 +30,25 @@ export default function CurrentPlays() {
     () => window.matchMedia("(prefers-reduced-motion:reduce)").matches,
   );
   const [isPageVisible, setIsPageVisible] = useState(!document.hidden);
+  const games = gameData;
 
   const carouselRef = useRef<HTMLUListElement>(null);
   const pauseTimerRef = useRef<number | null>(null);
 
-  const displayedCurrentPlays = currentPlays.slice(0, MAX_CURRENT_PLAYS);
+  const currentlyPlayingGames = games.filter(
+    (game) => game.status === GAME_STATUS.CURRENTLY_PLAYING,
+  );
+
+  const displayedCurrentPlays = currentlyPlayingGames
+    .sort((a, b) => {
+      if (!a.dateStarted) return -1;
+      if (!b.dateStarted) return 1;
+
+      return (
+        new Date(b.dateStarted).getTime() - new Date(a.dateStarted).getTime()
+      );
+    })
+    .slice(0, MAX_CURRENT_PLAYS);
 
   const isFirstGame = activeIndex === 0;
   const isLastGame = activeIndex === displayedCurrentPlays.length - 1;
@@ -201,7 +170,7 @@ export default function CurrentPlays() {
           id="current-plays-heading"
           className="text-text-primary font-semibold"
         >
-          Currently Playing
+          Currently Playing ({currentlyPlayingGames.length})
         </h2>
         {/* todo replace with Link from react-router library */}
         <a href="#" className="text-accent">
@@ -216,7 +185,7 @@ export default function CurrentPlays() {
       >
         {/* blurred background */}
         <img
-          src={displayedCurrentPlays[activeIndex].coverUrl}
+          src={displayedCurrentPlays[activeIndex].coverPath}
           alt={``}
           className="absolute pointer-events-none blur-sm w-full h-full object-cover -z-10 opacity-70"
           aria-hidden="true"
@@ -268,7 +237,7 @@ export default function CurrentPlays() {
             >
               <div className="flex flex-col items-center gap-2 justify-center">
                 <img
-                  src={game.coverUrl}
+                  src={game.coverPath}
                   alt={`${game.title} cover art`}
                   className="w-40 shadow-xl"
                   loading="lazy"
@@ -287,14 +256,16 @@ export default function CurrentPlays() {
                       {game.platform}
                     </span>
                     <span className="bg-surface rounded px-2 text-text-primary line-clamp-1">
-                      {game.system}
+                      {game.device}
                     </span>
                   </div>
 
                   {/* date */}
-                  <p className="text-text-primary/90">
-                    Started {getElapsedDays(game.start_date)}
-                  </p>
+                  {game.dateStarted && (
+                    <p className="text-text-primary/90">
+                      Started {getElapsedDays(game.dateStarted)}
+                    </p>
+                  )}
                 </div>
               </div>
             </li>
