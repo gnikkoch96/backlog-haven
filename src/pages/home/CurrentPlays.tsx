@@ -254,7 +254,7 @@ export default function CurrentPlays() {
                   <div className="flex gap-2">
                     <span className="bg-surface rounded px-2 text-text-primary line-clamp-1">
                       {game.platform}
-                    </span>
+                    </span> /
                     <span className="bg-surface rounded px-2 text-text-primary line-clamp-1">
                       {game.device}
                     </span>
