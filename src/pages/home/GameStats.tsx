@@ -1,41 +1,43 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Stats from "../../components/Stats";
 import type { StatItem } from "../../types/stats";
 import { gameData } from "../../mocks/gameData";
+import { GAME_STATUS } from "../../constants/gameStatus";
 
 const toggleButtonBase = "px-3 py-1.5 text-sm rounded-lg font-medium";
 
 export default function GameStats() {
   const [period, setPeriod] = useState<"all" | "year">("year");
-  const [stats, setStats] = useState<StatItem[] | null>(null);
+  const [games, setGames] = useState(gameData);
 
-  useEffect(() => {
-    // completed
-    const completedGames = gameData.filter(
-      (game) => game.status === "Completed",
-    ).length;
+  // completed
+  const completedGames = games.filter(
+    (game) => game.status === GAME_STATUS.COMPLETED,
+  ).length;
 
-    // abandoned
-    const abandonedGames = gameData.filter(
-      (game) => game.status === "Completed",
-    ).length;
+  // abandoned
+  const abandonedGames = games.filter(
+    (game) => game.status === GAME_STATUS.ABANDONED,
+  ).length;
 
-    // completion rate (completed/total)
-    const totalGames = gameData.filter(
-      (game) =>
-        game.status === "Completed" ||
-        game.status === "Abandoned" ||
-        game.status === "Currently Playing",
-    ).length;
+  // currently playin
+  const currentlyPlaying = games.filter(
+    (game) => game.status == GAME_STATUS.CURRENTLY_PLAYING,
+  ).length;
 
-    const completionRate = (completedGames / totalGames) * 100;
+  // completion rate (completed/total)
+  const totalGames = completedGames + abandonedGames + currentlyPlaying;
 
-    setStats([
-      { label: "Completed", value: completedGames },
-      { label: "Abandoned", value: abandonedGames },
-      { label: "Completion Rate", value: Number(completionRate.toFixed(2)) },
-    ]);
-  }, []);
+  const completionRate = (completedGames / totalGames) * 100;
+
+  const stats: StatItem[] = [
+    { label: GAME_STATUS.COMPLETED, value: completedGames },
+    { label: GAME_STATUS.ABANDONED, value: abandonedGames },
+    {
+      label: GAME_STATUS.COMPLETION_RATE,
+      value: Number(completionRate.toFixed(2)),
+    },
+  ];
 
   return (
     <section aria-labelledby="gaming-stats-heading" className="home-section">
