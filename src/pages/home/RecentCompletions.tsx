@@ -1,70 +1,20 @@
-const recentCompletions = [
-  {
-    id: 1,
-    title: "The Legend of Zelda: Breath of the Wild",
-    platform: "NS",
-    system: "ROG Ally",
-    genre: "Action Adventure",
-    status: "completed",
-    start_date: "2026-08-10",
-    finish_date: "2026-09-22",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co3p2d.jpg",
-  },
-  {
-    id: 2,
-    title: "GTA V",
-    platform: "NS",
-    system: "ROG Ally",
-    genre: "Metroidvania",
-    status: "completed",
-    start_date: "2026-09-15",
-    finish_date: "2026-10-02",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbd.jpg",
-  },
-  {
-    id: 3,
-    title: "Horizon Zero Dawn",
-    platform: "PS5",
-    system: "PlayStation 5",
-    genre: "JRPG",
-    status: "completed",
-    start_date: "2026-09-01",
-    finish_date: "2026-10-18",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co2una.jpg",
-  },
-  {
-    id: 4,
-    title: "Tyranny",
-    platform: "PC",
-    system: "ROG Ally",
-    genre: "Platformer",
-    status: "completed",
-    start_date: "2026-10-05",
-    finish_date: "2026-10-26",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co1n5f.jpg",
-  },
-  {
-    id: 5,
-    title: "God of War Ragnarok",
-    platform: "PS5",
-    system: "PlayStation 5",
-    genre: "Survival Horror",
-    status: "completed",
-    start_date: "2026-10-12",
-    finish_date: "2026-11-03",
-    coverUrl:
-      "https://images.igdb.com/igdb/image/upload/t_cover_big/co5s5v.jpg",
-  },
-];
+import { GAME_STATUS } from "../../constants/gameStatus";
+import { gameData } from "../../mocks/gameData";
 
 const MAX_RECENT_COMPLETIONS = 5;
 
 export default function RecentCompletions() {
-  const displayedRecentCompletions = recentCompletions.slice(
+  const games = gameData;
+  const completedGames = games
+    .filter((games) => games.status === GAME_STATUS.COMPLETED)
+    .sort((a, b) => {
+      if (!a.dateFinished) return -1;
+      if (!b.dateFinished) return 1;
+      return (
+        new Date(b.dateFinished).getTime() - new Date(a.dateFinished).getTime()
+      );
+    });
+  const displayedRecentCompletions = completedGames.slice(
     0,
     MAX_RECENT_COMPLETIONS,
   );
@@ -91,10 +41,13 @@ export default function RecentCompletions() {
       {/* recent completed games */}
       <ul className="flex overflow-x-auto">
         {displayedRecentCompletions.map((game) => (
-          <li key={game.id} className="flex flex-col gap-1 items-start w-[30%] shrink-0">
+          <li
+            key={game.id}
+            className="flex flex-col gap-1 items-start w-[30%] shrink-0"
+          >
             {/* game art */}
             <img
-              src={game.coverUrl}
+              src={game.coverPath}
               alt={`${game.title} cover art`}
               className="object-cover h-30"
               loading="lazy"
@@ -111,13 +64,15 @@ export default function RecentCompletions() {
             </span>
 
             {/* finished date */}
-            <p className="text-text-primary text-xs">
-              {Intl.DateTimeFormat("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              }).format(new Date(game.finish_date))}
-            </p>
+            {game.dateFinished && (
+              <p className="text-text-primary text-xs">
+                {Intl.DateTimeFormat("en-US", {
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                }).format(new Date(game.dateFinished))}
+              </p>
+            )}
           </li>
         ))}
       </ul>
