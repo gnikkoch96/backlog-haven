@@ -1,7 +1,6 @@
 import Stats from "../../components/Stats";
 import { GAME_STATUS } from "../../constants/gameStatus";
 import { gameData } from "../../mocks/gameData";
-import type { GameStatusFilter } from "../../types/filters";
 import type { StatItem } from "../../types/stats";
 
 type CollectionStatsProps = {
