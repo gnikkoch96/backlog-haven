@@ -25,3 +25,6 @@ dist-ssr
 
 # Personal engineering journal
 /docs/ENGINEERING_JOURNAL.md
+
+# Local agent instructions
+/AGENTS.md

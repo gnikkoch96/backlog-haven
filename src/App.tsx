@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import "@fontsource-variable/inter";
 import Home from "./pages/home/Home";
 import { MobileNavigation } from "./components/Navigation";
+import Collections from "./pages/collections/Collections";
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <Header />
 
       <div className="px-3">
-        <Home />
+        {/* <Home /> */}
+        <Collections/>
       </div>
 
       <MobileNavigation/>
