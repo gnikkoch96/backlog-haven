@@ -27,7 +27,7 @@ export default function Collections() {
       {/* option: banner */}
 
       {/* collection stats */}
-      <CollectionStats games={games} gameStatusFilters={gameStatusFilters} />
+      <CollectionStats games={games} />
 
       {/* game library */}
       <GameLibrary

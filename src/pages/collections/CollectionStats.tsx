@@ -6,11 +6,10 @@ import type { StatItem } from "../../types/stats";
 
 type CollectionStatsProps = {
   games: typeof gameData
-  gameStatusFilters: GameStatusFilter;
 }
 
 
-export default function CollectionStats({games, gameStatusFilters} : CollectionStatsProps) {
+export default function CollectionStats({games} : CollectionStatsProps) {
 
   // total games
   const totalGames = games.length;
