@@ -16,6 +16,15 @@ export default function GameLibrary({
   gameStatusFilters,
   handleGameStatusFilterChanges,
 }: GameLibraryProps) {
+  // status[0] - game status, status[1] - isChecked value
+  const checkedStatuses = Object.entries(gameStatusFilters)
+    .filter((status) => status[1] === true)
+    .map((status) => status[0]);
+
+  const filteredGames = games.filter((game) =>
+    checkedStatuses.includes(game.status),
+  );
+
   return (
     <section className="section-card">
       <div className="flex justify-between">
@@ -24,7 +33,7 @@ export default function GameLibrary({
           <LibraryBig className="text-accent" />
           <h2 className="text-xl font-semibold">Game Library</h2>
           <span className="border border-text-muted/30 rounded-xl px-2 bg-background text-sm">
-            {games.length}
+            {checkedStatuses.length > 0 ? filteredGames.length : games.length}
           </span>
         </span>
 
