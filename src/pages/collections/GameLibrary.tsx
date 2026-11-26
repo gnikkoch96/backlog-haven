@@ -2,20 +2,88 @@ import { LibraryBig, Search } from "lucide-react";
 import { gameData } from "../../mocks/gameData";
 import GameLibraryFilters from "./GameLibraryFilters";
 import type { GameStatusFilter } from "../../types/filters";
+import { useState } from "react";
+import {
+  sortOptions,
+  platformFilterOptions,
+  deviceFilterOptions,
+  ratingFilterOptions,
+} from "./gameLibraryOptions";
 
 type GameLibraryProps = {
   games: typeof gameData;
-  gameStatusFilters: GameStatusFilter;
-  handleGameStatusFilterChanges: (
-    newGameStatusFilters: GameStatusFilter,
-  ) => void;
 };
 
-export default function GameLibrary({
-  games,
-  gameStatusFilters,
-  handleGameStatusFilterChanges,
-}: GameLibraryProps) {
+const initialFilterOptions = {
+  "Currently Playing": false,
+  Completed: false,
+  Backlog: false,
+  Abandoned: false,
+};
+
+export default function GameLibrary({ games }: GameLibraryProps) {
+  const [gameStatusFilters, setGameStatusFilters] =
+    useState(initialFilterOptions);
+
+  const [selectedSortOption, setSelectedSortOption] = useState(
+    sortOptions.at(0),
+  );
+  const [selectedPlatformFilter, setSelectedPlatformFilter] = useState(
+    platformFilterOptions.at(0),
+  );
+  const [selectedDeviceFilter, setSelectedDeviceFilter] = useState(
+    deviceFilterOptions.at(0),
+  );
+  const [selectedRatingFilter, setSelectedRatingFilter] = useState(
+    ratingFilterOptions.at(0),
+  );
+
+  const handleGameStatusFiltersChange = (
+    newGameStatusFilters: GameStatusFilter,
+  ) => {
+    setGameStatusFilters(newGameStatusFilters);
+  };
+
+  const handleSortChange = ({
+    label,
+    value,
+  }: {
+    label: string;
+    value: string;
+  }) => {
+    setSelectedSortOption({ label, value });
+  };
+
+  const handlePlatformFilterChange = ({
+    label,
+    value,
+  }: {
+    label: string;
+    value: string;
+  }) => {
+    setSelectedPlatformFilter({ label, value });
+  };
+
+  const handleDeviceFilterChange = ({
+    label,
+    value,
+  }: {
+    label: string;
+    value: string;
+  }) => {
+    setSelectedDeviceFilter({ label, value });
+  };
+
+  const handleRatingFilterChange = ({
+    label,
+    value,
+  }: {
+    label: string;
+    value: string;
+  }) => {
+    setSelectedRatingFilter({ label, value });
+  };
+
   // status[0] - game status, status[1] - isChecked value
   const checkedStatuses = Object.entries(gameStatusFilters)
     .filter((status) => status[1] === true)
@@ -53,7 +121,15 @@ export default function GameLibrary({
       {/* filters */}
       <GameLibraryFilters
         gameStatusFilters={gameStatusFilters}
-        handleGameStatusFilterChanges={handleGameStatusFilterChanges}
+        handleGameStatusFilterChanges={handleGameStatusFiltersChange}
+        selectedSortOption={selectedSortOption}
+        selectedDeviceFilter={selectedDeviceFilter}
+        selectedPlatformFilter={selectedPlatformFilter}
+        selectedRatingFilter={selectedRatingFilter}
+        handleDeviceFilterChange={handleDeviceFilterChange}
+        handlePlatformFilterChange={handlePlatformFilterChange}
+        handleRatingFilterChange={handleRatingFilterChange}
+        handleSortChange={handleSortChange}
       />
 
       {/* results */}
