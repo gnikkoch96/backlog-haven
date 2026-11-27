@@ -110,7 +110,7 @@ export default function GameLibraryFilters({
                 <input
                   type="checkbox"
                   name="gameStatusFilter"
-                  id={`${gameStatusFilter}Filter`}
+                  id={`${gameStatus}-Filter`}
                   checked={isGameStatusChecked}
                   onChange={(event) => {
                     handleGameStatusFilterChanges({
@@ -121,13 +121,13 @@ export default function GameLibraryFilters({
                   className="sr-only"
                 />
                 <label
-                  htmlFor={`${gameStatusFilter}Filter`}
+                  htmlFor={`${gameStatus}-Filter`}
                   className={`relative py-1 pl-5 pr-2 text-sm ${isGameStatusChecked ? "bg-accent/30 text-text-primary rounded" : "bg-none"}`}
                 >
                   <span
                     className={`absolute size-1.5 left-2 top-1/2 -translate-y-1/2 shrink-0 rounded-full ${selectDotColor(gameStatus)}`}
                   />
-                  {gameStatusFilter}
+                  {gameStatus}
                 </label>
               </li>
             );

@@ -1,7 +1,6 @@
 import { LibraryBig, Search } from "lucide-react";
 import { gameData } from "../../mocks/gameData";
 import GameLibraryFilters from "./GameLibraryFilters";
-import type { GameStatusFilter } from "../../types/filters";
 import { useState } from "react";
 import {
   sortOptions,
@@ -37,52 +36,6 @@ export default function GameLibrary({ games }: GameLibraryProps) {
   const [selectedRatingFilter, setSelectedRatingFilter] = useState(
     ratingFilterOptions.at(0),
   );
-
-  const handleGameStatusFiltersChange = (
-    newGameStatusFilters: GameStatusFilter,
-  ) => {
-    setGameStatusFilters(newGameStatusFilters);
-  };
-
-  const handleSortChange = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string;
-  }) => {
-    setSelectedSortOption({ label, value });
-  };
-
-  const handlePlatformFilterChange = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string;
-  }) => {
-    setSelectedPlatformFilter({ label, value });
-  };
-
-  const handleDeviceFilterChange = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string;
-  }) => {
-    setSelectedDeviceFilter({ label, value });
-  };
-
-  const handleRatingFilterChange = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string;
-  }) => {
-    setSelectedRatingFilter({ label, value });
-  };
 
   // status[0] - game status, status[1] - isChecked value
   const checkedStatuses = Object.entries(gameStatusFilters)
@@ -121,15 +74,15 @@ export default function GameLibrary({ games }: GameLibraryProps) {
       {/* filters */}
       <GameLibraryFilters
         gameStatusFilters={gameStatusFilters}
-        handleGameStatusFilterChanges={handleGameStatusFiltersChange}
+        handleGameStatusFilterChanges={setGameStatusFilters}
         selectedSortOption={selectedSortOption}
         selectedDeviceFilter={selectedDeviceFilter}
         selectedPlatformFilter={selectedPlatformFilter}
         selectedRatingFilter={selectedRatingFilter}
-        handleDeviceFilterChange={handleDeviceFilterChange}
-        handlePlatformFilterChange={handlePlatformFilterChange}
-        handleRatingFilterChange={handleRatingFilterChange}
-        handleSortChange={handleSortChange}
+        handleDeviceFilterChange={setSelectedDeviceFilter}
+        handlePlatformFilterChange={setSelectedPlatformFilter}
+        handleRatingFilterChange={setSelectedRatingFilter}
+        handleSortChange={setSelectedSortOption}
       />
 
       {/* results */}
