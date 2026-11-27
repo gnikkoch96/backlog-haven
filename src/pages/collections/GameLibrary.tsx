@@ -42,9 +42,15 @@ export default function GameLibrary({ games }: GameLibraryProps) {
     .filter((status) => status[1] === true)
     .map((status) => status[0]);
 
-  const filteredGames = games.filter((game) =>
-    checkedStatuses.includes(game.status),
+  const filteredGames = games.filter(
+    (game) =>
+      checkedStatuses.includes(game.status) ||
+      game.platform === selectedPlatformFilter?.value ||
+      game.device === selectedDeviceFilter?.value ||
+      (game.rating && Number(game.rating) >= Number(selectedRatingFilter?.value)),
   );
+
+  console.log(filteredGames);
 
   return (
     <section className="section-card">
@@ -54,7 +60,13 @@ export default function GameLibrary({ games }: GameLibraryProps) {
           <LibraryBig className="text-accent" />
           <h2 className="text-xl font-semibold">Game Library</h2>
           <span className="border border-text-muted/30 rounded-xl px-2 bg-background text-sm">
-            {checkedStatuses.length > 0 ? filteredGames.length : games.length}
+            {checkedStatuses.length > 0 ||
+            (selectedPlatformFilter &&
+              selectedPlatformFilter.value.length > 0) ||
+            (selectedDeviceFilter && selectedDeviceFilter.value.length > 0) || 
+            (selectedRatingFilter && selectedRatingFilter.value.length > 0)
+              ? filteredGames.length
+              : games.length}
           </span>
         </span>
 

@@ -11,39 +11,42 @@ export const sortOptions = [
   { label: "Rating - Lowest", value: "rating-asc" },
 ];
 
+
+// TODO make it based on platforms the user has
 export const platformFilterOptions = [
   { label: "All Platforms", value: "" },
   { label: "NS", value: "Nintendo Switch" },
   { label: "PC", value: "PC" },
-  { label: "PS2", value: "PlayStation 2" },
-  { label: "PS3", value: "PlayStation 3" },
-  { label: "PS4", value: "PlayStation 4" },
-  { label: "PS5", value: "PlayStation 5" },
+  { label: "PS2", value: "PS2" },
+  { label: "PS3", value: "PS3" },
+  { label: "PS4", value: "PS4" },
+  { label: "PS5", value: "PS5" },
 ];
 
+// TODO make it based on the devices the user PS
 export const deviceFilterOptions = [
   { label: "All Systems / Devices", value: "" },
   { label: "PC", value: "PC" },
   { label: "Nintendo Switch", value: "NS" },
-  { label: "PS2", value: "PlayStation 2" },
-  { label: "PS3", value: "PlayStation 3" },
-  { label: "PS4", value: "PlayStation 4" },
+  { label: "PS2", value: "PS2" },
+  { label: "PS3", value: "PS3" },
+  { label: "PS4", value: "PS4" },
   { label: "PS5", value: "PS5" },
-  { label: "Rog Ally", value: "Rog Ally" },
-  { label: "Steam Deck", value: "Steam Deck" },
-  { label: "XBXX", value: "Xbox Series X" },
+  { label: "Rog Ally", value: "RA" },
+  { label: "Steam Deck", value: "SD" },
+  { label: "XBXX", value: "XBXX" },
 ];
 
 export const ratingFilterOptions = [
   { label: "All Ratings", value: "" },
   { label: "10", value: "10" },
-  { label: "9", value: "9" },
-  { label: "8", value: "8" },
-  { label: "7", value: "7" },
-  { label: "6", value: "6" },
-  { label: "5", value: "5" },
-  { label: "4", value: "4" },
-  { label: "3", value: "3" },
-  { label: "2", value: "2" },
-  { label: "1", value: "1" },
+  { label: ">= 9", value: "9" },
+  { label: ">= 8", value: "8" },
+  { label: ">= 7", value: "7" },
+  { label: ">= 6", value: "6" },
+  { label: ">= 5", value: "5" },
+  { label: ">= 4", value: "4" },
+  { label: ">= 3", value: "3" },
+  { label: ">= 2", value: "2" },
+  { label: ">= 1", value: "1" },
 ];
